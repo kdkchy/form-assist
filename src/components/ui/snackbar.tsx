@@ -1,10 +1,11 @@
 import { Alert, Snackbar } from "@mui/material";
 
-export function SnackBarSuccess(props: {openSnack: boolean, message: string}) {
+export function SnackBarSuccess(props: {openSnack: boolean, onClose: () => void, message: string}) {
     return (
         <Snackbar
             open={props.openSnack}
             autoHideDuration={6000}
+            onClose={props.onClose}
         >
             <Alert
                 severity="success"

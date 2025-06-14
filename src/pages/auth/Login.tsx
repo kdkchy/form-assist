@@ -65,7 +65,7 @@ const Login = () => {
                     email: authResponse.email
                 }
             }))
-            navigate('/', { replace: true });
+            navigate('/forms', { replace: true });
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 setErrorServer(error.response?.data.message);

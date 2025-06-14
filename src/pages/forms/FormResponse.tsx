@@ -1,5 +1,5 @@
 import { Link, Navigate, useParams } from 'react-router';
-import { Button, Chip, Typography } from '@mui/material';
+import { Alert, Button, Chip, Typography } from '@mui/material';
 import { useFetchForm } from '@/api/form/useFetchForm';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -32,11 +32,17 @@ export default function FormResponse() {
         resolver: schema ? yupResolver(schema) : undefined,
     });
 
+    const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined)
     const [submitSuccess, setSubmitSuccess] = useState<boolean>(false)
     const { mutate, isPending } =
         useCreateFormResponse({
             onSuccess: () => { setSubmitSuccess(true) },
-            onError: (error) => errorHelper(setError, error),
+            onError: (error) => {
+                errorHelper(setError, error)
+                if (error.status === 422) {
+                    setErrorMessage(error.response?.data.message)
+                }
+            },
         });
 
     const onSubmit = (data: any) => {
@@ -53,7 +59,7 @@ export default function FormResponse() {
                     <Typography variant='h4'>Congratulation, your response has been submited!</Typography>
                 </div>
                 <div className='flex justify-center'>
-                    <Link to={`/`}>
+                    <Link to={`/forms`}>
                         <Button variant="text" >Go to dashboard</Button>
                     </Link>
                 </div>
@@ -81,6 +87,11 @@ export default function FormResponse() {
                             </div>
                         </CardContent>
                     </Card>
+                    {errorMessage && (
+                        <Alert variant="filled" severity="error">
+                            {errorMessage}
+                        </Alert>
+                    )}
                     <Card>
                         <CardContent>
                             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">

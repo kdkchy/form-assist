@@ -21,10 +21,16 @@ export default function FormDetailPage() {
     const { slug } = useParams();
     const { error: errorForm, data: form, isFetching: isFetchingForm, refetch } = useFetchForm(slug!);
     const { error: errorResponse, data: responses, isFetching: isFetchingResponse } = useFetchFormResponse(slug!);
+    
     const [openSnack, setOpenSnack] = useState<boolean>(false)
-
     const onSuccess = () => {
         setOpenSnack(true)
+        refetch()
+    }
+
+    const [openSnackDelete, setOpenSnackDelete] = useState<boolean>(false)
+    const onSuccessDelete = () => {
+        setOpenSnackDelete(true)
         refetch()
     }
 
@@ -43,7 +49,8 @@ export default function FormDetailPage() {
 
     return (
         <Fragment>
-            <SnackBarSuccess openSnack={openSnack} message='Question created successfully' />
+            <SnackBarSuccess openSnack={openSnack} onClose={() => setOpenSnack(false)} message='Question created successfully' />
+            <SnackBarSuccess openSnack={openSnackDelete} onClose={() => setOpenSnackDelete(false)} message='Question deleted successfully' />
             {/* Form Detail */}
             {!isFetchingForm && form && (
                 <div className='mb-10'>
@@ -122,7 +129,7 @@ export default function FormDetailPage() {
                                                     {response.user.email}
                                                 </TableCell>
                                                 <TableCell component="th" scope="row" align='center'>
-                                                    {!response.user.email_verified_at ? (
+                                                    {response.user.email_verified_at ? (
                                                         <p className='text-blue-500'>Verified{' '}<TaskAltIcon fontSize="small" /></p>
                                                     ) : (
                                                         <p className='text-slate-500'>Unverified</p>
@@ -171,7 +178,7 @@ export default function FormDetailPage() {
                                                     {question.is_required ? <Chip size='small' color='primary' variant='outlined' label='Required' /> : <Chip size='small' variant='filled' label='Optional' />}
                                                 </TableCell>
                                                 <TableCell align='center'>
-                                                    <DialogQuestionDelete name={question.name} slug={form.slug} questionId={question.id} onSuccess={onSuccess} />
+                                                    <DialogQuestionDelete name={question.name} slug={form.slug} questionId={question.id} onSuccess={onSuccessDelete} />
                                                 </TableCell>
                                             </TableRow>
                                         ))}

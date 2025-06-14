@@ -19,7 +19,7 @@ export default function FormsPage() {
     }
     return (
         <Fragment>
-            <SnackBarSuccess openSnack={openSnack} message='Form created successfully' />
+            <SnackBarSuccess openSnack={openSnack} onClose={() => setOpenSnack(false)}  message='Form created successfully' />
             <div className='mb-4'>
                 <DialogFormCreate onSuccess={onSuccess} />
             </div>
@@ -30,7 +30,7 @@ export default function FormsPage() {
                             <TableCell><span className='text-lg font-bold'>Name</span></TableCell>
                             <TableCell><span className='text-lg font-bold'>Slug</span></TableCell>
                             <TableCell><span className='text-lg font-bold'>Description</span></TableCell>
-                            <TableCell align='center'><span className='text-lg font-bold'>Single Response</span></TableCell>
+                            <TableCell align='center'><span className='text-lg font-bold'>Single Submission Only</span></TableCell>
                             <TableCell align='center'><span className='text-lg font-bold'>Action</span></TableCell>
                         </TableRow>
                     </TableHead>
