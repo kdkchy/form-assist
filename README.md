@@ -1,54 +1,60 @@
-# React + TypeScript + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+# Form Assist
+## How to
+```
+git clone https://github.com/kdkchy/form-assist.git
+cd form-assist
+npm i
+cp .env.example .env 
+	- setup env write base API URL on VITE_API_URL
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+## Package and Dependencies
 ```
+Typescript v5.8
+React v19.1
+Material UI v7.1
+React Tanstack Query v5.80
+Axios v1.9
+Redux v9.2
+React Hook Form v7.57
+Yup Validator v1.6
+DayJs v1.11
+Tailwind CSS v4.1
+```
+
+## What is pointed out
+This project is Google Form like project, creator are able to create form and question with option are simple input, textarea, select, radio button, checkbox, and date input. What's unique within the form is, it can restrict the participant to answer regarding their domain of email that registered on the platform. Link of the form are shareable and make other people can easy reach out the form and fill the answer
+
+## Project Directories
+```
+src
+ |--- api
+ |--- components
+ |--- lib
+ |--- pages
+ |--- routes
+ |--- store
+ |--- types
+```
+
+### api
+Store every request to BE that used on the system, it also sliced into smallest directory and file with single function. Requesting API are using axios and react query
+
+### components
+Write usable component that will used around the project, pages, or within this directories itself. Layout of the system is also stored here
+
+### lib
+Similar like components but this directories will store function that often used in any pages or component
+
+### pages
+Store every page that will be accessed, it slice into different file one file, one page. In this directories also slice smallest component that only used in the directories itself, for example, FormDetail page may have FormCreate that will only used in this directories. Even it called component but because it only used in this directory.
+
+### routes
+Every route handling are stored here
+
+### store
+Because this project is forced user to access the form using authentication, we need Redux to store token and also need Redux Persist, this will make token will not refreshed even the browser is refreshed
+
+### types
+Making sure and predict every data that stored and called all over the page, component and also request response from and to BE, this directories is stored every types of data that used in the entire project
